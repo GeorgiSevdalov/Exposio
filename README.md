@@ -33,38 +33,6 @@ State Management: RxJS Observables
 Styling: Angular Material + Bootstrap utilities
 Authentication: Supabase Auth with JWT
 
-📁 Project Structure
-src/app/
-├── auth/                    # Authentication components
-│   ├── login/
-│   ├── register/
-│   └── profile/
-├── core/                    # Core services and guards
-│   ├── guards/
-│   │   └── auth.guard.ts
-│   └── services/
-│       ├── auth.service.ts
-│       ├── supabase.service.ts
-│       ├── exposition.service.ts
-│       └── sale-ads.service.ts
-├── features/                # Feature modules
-│   ├── expositions/
-│   │   ├── exposition-list/
-│   │   ├── exposition-details/
-│   │   └── exposition-form/
-│   └── sale-ads/
-│       ├── ad-list/
-│       ├── ad-details/
-│       └── ad-form/
-├── models/                  # TypeScript interfaces
-│   └── index.ts
-├── shared/                  # Shared components
-│   ├── components/
-│   │   ├── navbar/
-│   │   └── footer/
-│   └── pipes/
-└── dashboard/               # User dashboard
-    └── user-dashboard/
 🚀 Getting Started
 Prerequisites
 
