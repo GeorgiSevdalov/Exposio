@@ -10,7 +10,7 @@ import { CreateExpositionDto, Exposition, UpdateExpositionDto } from '../../mode
 export class ExpositionService  {
   constructor(private supabase: SupabaseService) {}
 
-    getAll(limit?: number, offset?: number): Observable<Exposition[]> {
+  getAll(limit?: number, offset?: number): Observable<Exposition[]> {
     let query = this.supabase.client
       .from('expositions')
       .select('*')

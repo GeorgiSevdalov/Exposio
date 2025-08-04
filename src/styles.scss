@@ -31,3 +31,33 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import '../node_modules/bootstrap/scss/bootstrap';
 
+/* Import Angular Material theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #fafafa;
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.text-center {
+  text-align: center;
+}
