@@ -1,1 +1,92 @@
-<p>exposition-card works!</p>
+<mat-card class="exposition-card" (click)="onCardClick()">
+  <!-- Image Section -->
+  <div class="card-image-container">
+    <img 
+      mat-card-image 
+      [src]="previewImage" 
+      [alt]="exposition.title"
+      class="card-image"
+      loading="lazy">
+    
+    <!-- Image Count Badge -->
+    @if (imageCount > 1) {
+      <div class="image-count-badge">
+        <mat-icon>photo_library</mat-icon>
+        <span>{{ imageCount }}</span>
+      </div>
+    }
+
+    <!-- Quick Actions Overlay -->
+    @if (showActions) {
+      <div class="card-overlay">
+        <div class="overlay-actions">
+          <button 
+            mat-mini-fab 
+            color="primary" 
+            (click)="onLike($event)"
+            [attr.aria-label]="'Like exposition'">
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+          
+          @if (isOwner) {
+            <button 
+              mat-mini-fab 
+              color="accent" 
+              (click)="onEdit($event)"
+              [attr.aria-label]="'Edit exposition'">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Content Section -->
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">{{ exposition.title }}</mat-card-title>
+    <mat-card-subtitle class="card-date">
+      {{ exposition.created_at | date:'mediumDate' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="card-content">
+    <p class="card-description">
+      {{ exposition.description | slice:0:120 }}
+      @if (exposition.description && exposition.description.length > 120) {
+        <span>...</span>
+      }
+    </p>
+  </mat-card-content>
+
+  <!-- Stats Section -->
+  @if (showActions) {
+    <mat-card-actions class="card-stats">
+      <div class="stats-container">
+        <div class="stat-item">
+          <mat-icon class="stat-icon">favorite</mat-icon>
+          <span class="stat-number">{{ exposition.likes || 0 }}</span>
+        </div>
+        
+        <div class="stat-item">
+          <mat-icon class="stat-icon">thumb_down</mat-icon>
+          <span class="stat-number">{{ exposition.dislikes || 0 }}</span>
+        </div>
+        
+        <div class="stat-item">
+          <mat-icon class="stat-icon">comment</mat-icon>
+          <span class="stat-number">{{ exposition.comments.length || 0 }}</span>
+        </div>
+      </div>
+
+      <div class="card-actions-right">
+        <button 
+          mat-button 
+          color="primary"
+          (click)="onCardClick()">
+          View Details
+        </button>
+      </div>
+    </mat-card-actions>
+  }
+</mat-card>

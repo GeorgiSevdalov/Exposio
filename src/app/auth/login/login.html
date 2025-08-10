@@ -21,9 +21,11 @@
               placeholder="Enter your email"
               autocomplete="email">
             <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="emailControl?.invalid && emailControl?.touched">
-              {{ getEmailErrorMessage() }}
-            </mat-error>
+            @if (emailControl?.invalid && emailControl?.touched) {
+              <mat-error>
+                {{ getEmailErrorMessage() }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
@@ -43,25 +45,30 @@
               [attr.aria-pressed]="hidePassword">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl?.invalid && passwordControl?.touched">
-              {{ getPasswordErrorMessage() }}
-            </mat-error>
+            @if (passwordControl?.invalid && passwordControl?.touched) {
+              <mat-error>
+                {{ getPasswordErrorMessage() }}
+              </mat-error>
+            }
           </mat-form-field>
 
+          <!-- Submit Button -->
           <button 
             mat-raised-button 
             color="primary" 
             type="submit"
             class="submit-button full-width"
             [disabled]="isLoading">
-            <mat-spinner 
-              *ngIf="isLoading" 
-              diameter="20" 
-              color="accent"
-              class="button-spinner">
-            </mat-spinner>
-            <span *ngIf="!isLoading">Sign In</span>
-            <span *ngIf="isLoading">Signing In...</span>
+            @if (isLoading) {
+              <mat-spinner 
+                diameter="20" 
+                color="accent"
+                class="button-spinner">
+              </mat-spinner>
+              <span>Signing In...</span>
+            } @else {
+              <span>Sign In</span>
+            }
           </button>
         </form>
       </mat-card-content>

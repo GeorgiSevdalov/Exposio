@@ -20,41 +20,41 @@
 
     <div class="navbar-spacer"></div>
 
-    <div class="navbar-user" *ngIf="isAuthenticated$ | async; else guestMenu">
-      <button mat-icon-button (click)="navigateToCreate()" matTooltip="Create New">
-        <mat-icon>add_circle</mat-icon>
-      </button>
-
-      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-menu-trigger">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-
-      <mat-menu #userMenu="matMenu" class="user-dropdown">
-        <div class="user-info" mat-menu-item disabled>
-          <div class="user-email">{{ (currentUser$ | async)?.email }}</div>
-        </div>
-        <mat-divider></mat-divider>
-        
-        <button mat-menu-item (click)="navigateToDashboard()">
-          <mat-icon>dashboard</mat-icon>
-          <span>Dashboard</span>
+    @if (isAuthenticated$ | async) {
+      <div class="navbar-user">
+        <button mat-icon-button (click)="navigateToCreate()" matTooltip="Create New">
+          <mat-icon>add_circle</mat-icon>
         </button>
-        
-        <button mat-menu-item (click)="navigateToProfile()">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </button>
-        
-        <mat-divider></mat-divider>
-        
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-    </div>
 
-    <ng-template #guestMenu>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-menu-trigger">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <mat-menu #userMenu="matMenu" class="user-dropdown">
+          <div class="user-info" mat-menu-item disabled>
+            <div class="user-email">{{ (currentUser$ | async)?.email }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          
+          <button mat-menu-item (click)="navigateToDashboard()">
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </button>
+          
+          <button mat-menu-item (click)="navigateToProfile()">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          
+          <mat-divider></mat-divider>
+          
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    } @else {
       <div class="navbar-guest">
         <button mat-button routerLink="/auth/login" class="login-button">
           Login
@@ -63,6 +63,6 @@
           Sign Up
         </button>
       </div>
-    </ng-template>
+    }
   </div>
 </mat-toolbar>

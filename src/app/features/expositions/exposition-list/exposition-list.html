@@ -1,1 +1,131 @@
-<p>exposition-list works!</p>
+<div class="exposition-list-container">
+  <div class="container">
+    <!-- Header Section -->
+    <div class="page-header">
+      <div class="header-content">
+        <h1>Gallery Expositions</h1>
+        <p class="page-subtitle">
+          Discover amazing artistic works and creative expositions from our community
+        </p>
+      </div>
+      
+      <!-- Create Button (for authenticated users) -->
+      @if (isAuthenticated$ | async) {
+        <div class="header-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            routerLink="/expositions/create"
+            class="create-button">
+            <mat-icon>add</mat-icon>
+            Create Exposition
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Controls Section -->
+    @if (!isLoading && !error) {
+      <div class="controls-section">
+        <div class="controls-left">
+          <span class="results-count">
+            {{ expositions.length }} exposition{{ expositions.length !== 1 ? 's' : '' }} found
+          </span>
+        </div>
+        
+        <div class="controls-right">
+          <mat-form-field appearance="outline" class="sort-field">
+            <mat-label>Sort by</mat-label>
+            <mat-select [(value)]="sortBy" (selectionChange)="onSortChange()">
+              <mat-option value="newest">Newest First</mat-option>
+              <mat-option value="oldest">Oldest First</mat-option>
+              <mat-option value="mostLiked">Most Liked</mat-option>
+              <mat-option value="alphabetical">Alphabetical</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    }
+
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading expositions...</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (error && !isLoading) {
+      <div class="error-container">
+        <mat-card class="error-card">
+          <mat-card-content>
+            <div class="error-content">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <h3>Oops! Something went wrong</h3>
+              <p>{{ error }}</p>
+              <button mat-raised-button color="primary" (click)="onRetry()">
+                <mat-icon>refresh</mat-icon>
+                Try Again
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && !error && expositions.length === 0) {
+      <div class="empty-container">
+        <mat-card class="empty-card">
+          <mat-card-content>
+            <div class="empty-content">
+              <mat-icon class="empty-icon">collections</mat-icon>
+              <h3>No expositions yet</h3>
+              <p>Be the first to share your creative work with the community!</p>
+              @if (isAuthenticated$ | async) {
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  routerLink="/expositions/create">
+                  <mat-icon>add</mat-icon>
+                  Create First Exposition
+                </button>
+              } @else {
+                <div class="login-prompt">
+                  <button mat-raised-button color="primary" routerLink="/auth/register">
+                    Sign Up to Create
+                  </button>
+                  <button mat-stroked-button routerLink="/auth/login">
+                    Login
+                  </button>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+
+    <!-- Expositions Grid -->
+    @if (!isLoading && !error && expositions.length > 0) {
+      <div class="expositions-grid">
+        @for (exposition of expositions; track exposition.id) {
+          <app-exposition-card
+            [exposition]="exposition"
+            [showActions]="true">
+          </app-exposition-card>
+        }
+      </div>
+    }
+
+    <!-- Load More Section (for future pagination) -->
+    @if (expositions.length > 0 && !isLoading) {
+      <div class="load-more-section">
+        <p class="load-more-info">
+          Showing all {{ expositions.length }} expositions
+        </p>
+      </div>
+    }
+  </div>
+</div>

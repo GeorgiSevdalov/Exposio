@@ -22,9 +22,11 @@
               placeholder="Enter your email"
               autocomplete="email">
             <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="emailControl?.invalid && emailControl?.touched">
-              {{ getEmailErrorMessage() }}
-            </mat-error>
+            @if (emailControl?.invalid && emailControl?.touched) {
+              <mat-error>
+                {{ getEmailErrorMessage() }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Password Field -->
@@ -45,9 +47,11 @@
               [attr.aria-pressed]="hidePassword">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl?.invalid && passwordControl?.touched">
-              {{ getPasswordErrorMessage() }}
-            </mat-error>
+            @if (passwordControl?.invalid && passwordControl?.touched) {
+              <mat-error>
+                {{ getPasswordErrorMessage() }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Confirm Password Field -->
@@ -68,9 +72,11 @@
               [attr.aria-pressed]="hideConfirmPassword">
               <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="confirmPasswordControl?.invalid && confirmPasswordControl?.touched || registerForm.hasError('passwordMismatch') && confirmPasswordControl?.touched">
-              {{ getConfirmPasswordErrorMessage() }}
-            </mat-error>
+            @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched || registerForm.hasError('passwordMismatch') && confirmPasswordControl?.touched) {
+              <mat-error>
+                {{ getConfirmPasswordErrorMessage() }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Terms and Conditions -->
@@ -81,9 +87,11 @@
               and 
               <a routerLink="/privacy" target="_blank" class="terms-link">Privacy Policy</a>
             </mat-checkbox>
-            <mat-error *ngIf="acceptTermsControl?.invalid && acceptTermsControl?.touched" class="terms-error">
-              You must accept the terms and conditions
-            </mat-error>
+            @if (acceptTermsControl?.invalid && acceptTermsControl?.touched) {
+              <mat-error class="terms-error">
+                You must accept the terms and conditions
+              </mat-error>
+            }
           </div>
 
           <!-- Submit Button -->
@@ -93,14 +101,16 @@
             type="submit"
             class="submit-button full-width"
             [disabled]="isLoading">
-            <mat-spinner 
-              *ngIf="isLoading" 
-              diameter="20" 
-              color="accent"
-              class="button-spinner">
-            </mat-spinner>
-            <span *ngIf="!isLoading">Create Account</span>
-            <span *ngIf="isLoading">Creating Account...</span>
+            @if (isLoading) {
+              <mat-spinner 
+                diameter="20" 
+                color="accent"
+                class="button-spinner">
+              </mat-spinner>
+              <span>Creating Account...</span>
+            } @else {
+              <span>Create Account</span>
+            }
           </button>
         </form>
       </mat-card-content>

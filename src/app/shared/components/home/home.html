@@ -1,81 +1,83 @@
 <div class="home-container">
-    <div class="hero-section">
+      <div class="hero-section">
         <div class="hero-content">
-            <h1>Welcome to Exposio</h1>
-            <p class="hero-subtitle">
-                Where creativity meets commerce. Showcase your art and discover unique treasures.
-            </p>
-            <div class="hero-actions">
-                <!-- Authenticated User Actions -->
-                <ng-container *ngIf="isAuthenticated$ | async; else guestActions">
-                    <button mat-raised-button color="primary" routerLink="/dashboard">
-                        <mat-icon>dashboard</mat-icon>
-                        Go to Dashboard
-                    </button>
-                    <button mat-stroked-button color="primary" routerLink="/expositions/create">
-                        <mat-icon>add</mat-icon>
-                        Create Exposition
-                    </button>
-                </ng-container>
-
-                <!-- Guest User Actions -->
-                <ng-template #guestActions>
-                    <button mat-raised-button color="primary" routerLink="/auth/register">
-                        <mat-icon>palette</mat-icon>
-                        Get Started
-                    </button>
-                    <button mat-stroked-button color="primary" routerLink="/expositions">
-                        <mat-icon>collections</mat-icon>
-                        Browse Gallery
-                    </button>
-                </ng-template>
-            </div>
+          <h1>Welcome to Exposio</h1>
+          <p class="hero-subtitle">
+            Where creativity meets commerce. Showcase your art and discover unique treasures.
+          </p>
+          <div class="hero-actions">
+            <!-- Authenticated User Actions -->
+            @if (isAuthenticated$ | async) {
+              <button mat-raised-button color="primary" routerLink="/dashboard">
+                <mat-icon>dashboard</mat-icon>
+                Go to Dashboard
+              </button>
+              <button mat-stroked-button color="primary" routerLink="/expositions/create">
+                <mat-icon>add</mat-icon>
+                Create Exposition
+              </button>
+            } @else {
+              <!-- Guest User Actions -->
+              <button mat-raised-button color="primary" routerLink="/auth/register">
+                <mat-icon>palette</mat-icon>
+                Get Started
+              </button>
+              <button mat-stroked-button color="primary" routerLink="/expositions">
+                <mat-icon>collections</mat-icon>
+                Browse Gallery
+              </button>
+            }
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="features-section">
+      <div class="features-section">
         <div class="container">
-            <h2>Discover What's Possible</h2>
-            <div class="features-grid">
-                <mat-card class="feature-card">
-                    <mat-card-header>
-                        <mat-icon mat-card-avatar>collections</mat-icon>
-                        <mat-card-title>Gallery Expositions</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        Create stunning expositions to showcase your artistic work and photography.
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-button routerLink="/expositions">View Gallery</button>
-                    </mat-card-actions>
-                </mat-card>
+          <h2>Discover What's Possible</h2>
+          <div class="features-grid">
+            <mat-card class="feature-card">
+              <mat-card-header>
+                <mat-icon mat-card-avatar>collections</mat-icon>
+                <mat-card-title>Gallery Expositions</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                Create stunning expositions to showcase your artistic work and photography.
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button routerLink="/expositions">View Gallery</button>
+              </mat-card-actions>
+            </mat-card>
 
-                <mat-card class="feature-card">
-                    <mat-card-header>
-                        <mat-icon mat-card-avatar>shopping_cart</mat-icon>
-                        <mat-card-title>Marketplace</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        Buy and sell unique items in our creative marketplace.
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-button routerLink="/sale-ads">Browse Items</button>
-                    </mat-card-actions>
-                </mat-card>
+            <mat-card class="feature-card">
+              <mat-card-header>
+                <mat-icon mat-card-avatar>shopping_cart</mat-icon>
+                <mat-card-title>Marketplace</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                Buy and sell unique items in our creative marketplace.
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button routerLink="/sale-ads">Browse Items</button>
+              </mat-card-actions>
+            </mat-card>
 
-                <mat-card class="feature-card">
-                    <mat-card-header>
-                        <mat-icon mat-card-avatar>people</mat-icon>
-                        <mat-card-title>Community</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        Connect with artists and creators from around the world.
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-button routerLink="/auth/register">Join Now</button>
-                    </mat-card-actions>
-                </mat-card>
-            </div>
+            <mat-card class="feature-card">
+              <mat-card-header>
+                <mat-icon mat-card-avatar>people</mat-icon>
+                <mat-card-title>Community</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                Connect with artists and creators from around the world.
+              </mat-card-content>
+              <mat-card-actions>
+                @if (!(isAuthenticated$ | async)) {
+                  <button mat-button routerLink="/auth/register">Join Now</button>
+                } @else {
+                  <button mat-button routerLink="/dashboard">Your Activity</button>
+                }
+              </mat-card-actions>
+            </mat-card>
+          </div>
         </div>
+      </div>
     </div>
-</div>
