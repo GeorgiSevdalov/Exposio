@@ -6,14 +6,29 @@
                 Where creativity meets commerce. Showcase your art and discover unique treasures.
             </p>
             <div class="hero-actions">
-                <button mat-raised-button color="primary" routerLink="/auth/register">
-                    <mat-icon>palette</mat-icon>
-                    Get Started
-                </button>
-                <button mat-stroked-button color="primary" routerLink="/expositions">
-                    <mat-icon>collections</mat-icon>
-                    Browse Gallery
-                </button>
+                <!-- Authenticated User Actions -->
+                <ng-container *ngIf="isAuthenticated$ | async; else guestActions">
+                    <button mat-raised-button color="primary" routerLink="/dashboard">
+                        <mat-icon>dashboard</mat-icon>
+                        Go to Dashboard
+                    </button>
+                    <button mat-stroked-button color="primary" routerLink="/expositions/create">
+                        <mat-icon>add</mat-icon>
+                        Create Exposition
+                    </button>
+                </ng-container>
+
+                <!-- Guest User Actions -->
+                <ng-template #guestActions>
+                    <button mat-raised-button color="primary" routerLink="/auth/register">
+                        <mat-icon>palette</mat-icon>
+                        Get Started
+                    </button>
+                    <button mat-stroked-button color="primary" routerLink="/expositions">
+                        <mat-icon>collections</mat-icon>
+                        Browse Gallery
+                    </button>
+                </ng-template>
             </div>
         </div>
     </div>
