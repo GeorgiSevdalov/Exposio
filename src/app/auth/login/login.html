@@ -1,1 +1,100 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-content">
+    <mat-card class="login-card">
+      <mat-card-header class="login-header">
+        <div class="brand-logo">
+          <mat-icon class="brand-icon">palette</mat-icon>
+          <span class="brand-name">Exposio</span>
+        </div>
+        <mat-card-title>Welcome Back</mat-card-title>
+        <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="login-form-content">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input 
+              matInput 
+              type="email" 
+              formControlName="email"
+              placeholder="Enter your email"
+              autocomplete="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="emailControl?.invalid && emailControl?.touched">
+              {{ getEmailErrorMessage() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input 
+              matInput 
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password">
+            <button 
+              mat-icon-button 
+              matSuffix 
+              type="button"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="passwordControl?.invalid && passwordControl?.touched">
+              {{ getPasswordErrorMessage() }}
+            </mat-error>
+          </mat-form-field>
+
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit"
+            class="submit-button full-width"
+            [disabled]="isLoading">
+            <mat-spinner 
+              *ngIf="isLoading" 
+              diameter="20" 
+              color="accent"
+              class="button-spinner">
+            </mat-spinner>
+            <span *ngIf="!isLoading">Sign In</span>
+            <span *ngIf="isLoading">Signing In...</span>
+          </button>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions class="login-actions">
+        <div class="auth-links">
+          <p class="register-prompt">
+            Don't have an account?
+            <a routerLink="/auth/register" class="register-link">Sign up here</a>
+          </p>
+          <a routerLink="/auth/forgot-password" class="forgot-password-link">
+            Forgot your password?
+          </a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="features-section">
+      <h3>Join the Creative Community</h3>
+      <div class="features-list">
+        <div class="feature-item">
+          <mat-icon>collections</mat-icon>
+          <span>Showcase your artistic expositions</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>Buy and sell in our marketplace</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>favorite</mat-icon>
+          <span>Connect with other creators</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

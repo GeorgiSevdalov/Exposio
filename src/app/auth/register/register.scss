@@ -1,0 +1,213 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  padding: 20px;
+}
+
+.register-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  width: 100%;
+  align-items: center;
+}
+
+.register-card {
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.register-header {
+  text-align: center;
+  padding: 32px 24px 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    
+    .brand-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      color: #1976d2;
+    }
+    
+    .brand-name {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+  
+  mat-card-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  mat-card-subtitle {
+    font-size: 16px;
+    color: #666;
+  }
+}
+
+.register-form-content {
+  padding: 32px 24px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .terms-section {
+    .terms-checkbox {
+      font-size: 14px;
+      line-height: 1.4;
+      
+      .terms-link {
+        color: #1976d2;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    .terms-error {
+      font-size: 12px;
+      color: #f44336;
+      margin-top: 8px;
+      display: block;
+    }
+  }
+  
+  .submit-button {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 8px;
+    position: relative;
+    
+    .button-spinner {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+}
+
+.register-actions {
+  padding: 0 24px 24px;
+  
+  .auth-links {
+    text-align: center;
+    
+    .login-prompt {
+      margin-bottom: 0;
+      color: #666;
+      font-size: 14px;
+      
+      .login-link {
+        color: #1976d2;
+        text-decoration: none;
+        font-weight: 500;
+        margin-left: 4px;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.benefits-section {
+  color: white;
+  padding: 40px;
+  
+  h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+        color: #fff;
+        margin-top: 4px;
+      }
+      
+      .benefit-content {
+        flex: 1;
+        
+        h4 {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          color: #fff;
+        }
+        
+        p {
+          font-size: 14px;
+          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.9);
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+// Global snackbar styles
+::ng-deep {
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+  
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+}
