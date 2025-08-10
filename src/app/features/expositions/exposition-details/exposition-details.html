@@ -1,1 +1,143 @@
-<p>exposition-details works!</p>
+<div class="details-container">
+  <div class="container">
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="loading-state">
+        <p>Loading exposition...</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (error && !isLoading) {
+      <div class="error-state">
+        <h3>Error</h3>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="onBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Gallery
+        </button>
+      </div>
+    }
+
+    <!-- Exposition Content -->
+    @if (exposition && !isLoading && !error) {
+      <div class="exposition-content">
+        <!-- Header -->
+        <div class="exposition-header">
+          <button mat-icon-button (click)="onBack()" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1>{{ exposition.title }}</h1>
+          @if (isOwner) {
+            <button mat-raised-button color="primary" (click)="onEdit()">
+              <mat-icon>edit</mat-icon>
+              Edit
+            </button>
+          }
+        </div>
+
+        <div class="exposition-body">
+          <!-- Main Image -->
+          <div class="image-section">
+            @if (exposition.images && exposition.images.length > 0) {
+              <div class="main-image-container">
+                <img 
+                  [src]="exposition.images[currentImageIndex]" 
+                  [alt]="exposition.title"
+                  class="main-image">
+                
+                @if (exposition.images.length > 1) {
+                  <button mat-icon-button class="nav-button prev-button" (click)="onPreviousImage()">
+                    <mat-icon>chevron_left</mat-icon>
+                  </button>
+                  <button mat-icon-button class="nav-button next-button" (click)="onNextImage()">
+                    <mat-icon>chevron_right</mat-icon>
+                  </button>
+                }
+              </div>
+
+              <!-- Image Thumbnails -->
+              @if (exposition.images.length > 1) {
+                <div class="thumbnails">
+                  @for (image of exposition.images; track $index) {
+                    <img 
+                      [src]="image" 
+                      [alt]="exposition.title + ' - Image ' + ($index + 1)"
+                      class="thumbnail"
+                      [class.active]="currentImageIndex === $index"
+                      (click)="onImageClick($index)">
+                  }
+                </div>
+              }
+            } @else {
+              <div class="no-images">
+                <mat-icon>image</mat-icon>
+                <p>No images available</p>
+              </div>
+            }
+          </div>
+
+          <!-- Content Section -->
+          <div class="content-section">
+            <mat-card>
+              <mat-card-content>
+                <!-- Description -->
+                <div class="description-section">
+                  <h3>Description</h3>
+                  @if (exposition.description) {
+                    <p>{{ exposition.description }}</p>
+                  } @else {
+                    <p class="no-description">No description provided.</p>
+                  }
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <!-- Stats and Actions -->
+                <div class="stats-actions">
+                  <div class="stats">
+                    <div class="stat-item">
+                      <mat-icon>favorite</mat-icon>
+                      <span>{{ exposition.likes || 0 }} likes</span>
+                    </div>
+                    <div class="stat-item">
+                      <mat-icon>thumb_down</mat-icon>
+                      <span>{{ exposition.dislikes || 0 }} dislikes</span>
+                    </div>
+                    <div class="stat-item">
+                      <mat-icon>comment</mat-icon>
+                      <span>{{ exposition.comments?.length || 0 }} comments</span>
+                    </div>
+                  </div>
+
+                  @if (isAuthenticated) {
+                    <div class="actions">
+                      <button mat-stroked-button (click)="onLike()">
+                        <mat-icon>favorite_border</mat-icon>
+                        Like
+                      </button>
+                      <button mat-stroked-button (click)="onDislike()">
+                        <mat-icon>thumb_down</mat-icon>
+                        Dislike
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <!-- Meta Information -->
+                <div class="meta-info">
+                  <p><strong>Created:</strong> {{ exposition.created_at | date:'fullDate' }}</p>
+                  @if (exposition.images && exposition.images.length > 0) {
+                    <p><strong>Images:</strong> {{ exposition.images.length }}</p>
+                  }
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

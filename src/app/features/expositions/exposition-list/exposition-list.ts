@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,6 +32,7 @@ import { Exposition } from '../../../models';
 export class ExpositionList implements OnInit {
   private expositionService = inject(ExpositionService);
   private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   expositions: Exposition[] = [];
   isLoading = false;
@@ -50,27 +51,24 @@ export class ExpositionList implements OnInit {
     this.loadExpositions();
   }
 
-  async loadExpositions(): Promise<void> {
+  loadExpositions(): void {
     this.isLoading = true;
     this.error = null;
+    this.cdr.detectChanges(); // Force change detection
 
-    try {
-      this.expositionService.getAll().subscribe({
-        next: (expositions) => {
-          this.expositions = this.sortExpositions(expositions);
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.error('Error loading expositions:', error);
-          this.error = 'Failed to load expositions. Please try again.';
-          this.isLoading = false;
-        }
-      });
-    } catch (error) {
-      console.error('Error loading expositions:', error);
-      this.error = 'Failed to load expositions. Please try again.';
-      this.isLoading = false;
-    }
+    this.expositionService.getAll().subscribe({
+      next: (expositions) => {
+        this.expositions = this.sortExpositions(expositions);
+        this.isLoading = false;
+        this.cdr.detectChanges(); // Force change detection
+      },
+      error: (error) => {
+        console.error('Error loading expositions:', error);
+        this.error = 'Failed to load expositions. Please try again.';
+        this.isLoading = false;
+        this.cdr.detectChanges(); // Force change detection
+      }
+    });
   }
 
   onSortChange(): void {
