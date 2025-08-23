@@ -25,7 +25,7 @@ import { Exposition } from '../../../models';
   styleUrl: './exposition-details.scss'
 })
 export class ExpositionDetails implements OnInit {
-private route = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
   private router = inject(Router);
   private expositionService = inject(ExpositionService);
   private authService = inject(AuthService);
@@ -35,6 +35,11 @@ private route = inject(ActivatedRoute);
   isLoading = true;
   error: string | null = null;
   currentImageIndex = 0;
+  
+  // User interactions
+  userLiked = false;
+  userDisliked = false;
+  isInteracting = false;
 
   get isOwner(): boolean {
     const currentUser = this.authService.currentUser;
@@ -99,13 +104,59 @@ private route = inject(ActivatedRoute);
   }
 
   onLike(): void {
-    console.log('Like exposition');
-    // TODO: Implement like functionality
+    if (!this.isAuthenticated || !this.exposition || this.isInteracting) return;
+
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) return;
+
+    this.isInteracting = true;
+    this.cdr.detectChanges();
+
+    this.expositionService.toggleLike(this.exposition.id, currentUser.id).subscribe({
+      next: (result) => {
+        if (this.exposition) {
+          this.exposition.likes = result.likes;
+          this.exposition.dislikes = result.dislikes;
+          this.userLiked = result.userLiked;
+          this.userDisliked = false; // Remove dislike if it was there
+        }
+        this.isInteracting = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error toggling like:', error);
+        this.isInteracting = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   onDislike(): void {
-    console.log('Dislike exposition');
-    // TODO: Implement dislike functionality
+    if (!this.isAuthenticated || !this.exposition || this.isInteracting) return;
+
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) return;
+
+    this.isInteracting = true;
+    this.cdr.detectChanges();
+
+    this.expositionService.toggleDislike(this.exposition.id, currentUser.id).subscribe({
+      next: (result) => {
+        if (this.exposition) {
+          this.exposition.likes = result.likes;
+          this.exposition.dislikes = result.dislikes;
+          this.userDisliked = result.userDisliked;
+          this.userLiked = false; // Remove like if it was there
+        }
+        this.isInteracting = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error toggling dislike:', error);
+        this.isInteracting = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   onBack(): void {

@@ -100,7 +100,7 @@
                   <p>{{ exposition.created_at | date:'mediumDate' }}</p>
                   <div class="exposition-stats">
                     <span><mat-icon>favorite</mat-icon> {{ exposition.likes || 0 }}</span>
-                    <span><mat-icon>image</mat-icon> {{ exposition.images?.length || 0 }}</span>
+                    <span><mat-icon>image</mat-icon> {{ exposition.images.length || 0 }}</span>
                   </div>
                 </div>
                 <div class="exposition-actions">

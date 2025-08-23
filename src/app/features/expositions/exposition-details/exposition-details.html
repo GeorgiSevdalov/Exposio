@@ -106,19 +106,27 @@
                     </div>
                     <div class="stat-item">
                       <mat-icon>comment</mat-icon>
-                      <span>{{ exposition.comments?.length || 0 }} comments</span>
+                      <span>{{ exposition.comments.length || 0 }} comments</span>
                     </div>
                   </div>
 
                   @if (isAuthenticated) {
                     <div class="actions">
-                      <button mat-stroked-button (click)="onLike()">
-                        <mat-icon>favorite_border</mat-icon>
-                        Like
+                      <button 
+                        mat-stroked-button 
+                        (click)="onLike()"
+                        [disabled]="isInteracting"
+                        [color]="userLiked ? 'primary' : 'basic'">
+                        <mat-icon>{{ userLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
+                        {{ userLiked ? 'Liked' : 'Like' }}
                       </button>
-                      <button mat-stroked-button (click)="onDislike()">
-                        <mat-icon>thumb_down</mat-icon>
-                        Dislike
+                      <button 
+                        mat-stroked-button 
+                        (click)="onDislike()"
+                        [disabled]="isInteracting"
+                        [color]="userDisliked ? 'warn' : 'basic'">
+                        <mat-icon>{{ userDisliked ? 'thumb_down' : 'thumb_down_off_alt' }}</mat-icon>
+                        {{ userDisliked ? 'Disliked' : 'Dislike' }}
                       </button>
                     </div>
                   }

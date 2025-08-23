@@ -54,13 +54,25 @@ export class ExpositionCard {
 
   onLike(event: Event): void {
     event.stopPropagation();
-    // TODO: Implement like functionality
-    console.log('Like exposition:', this.exposition.id);
+    if (!this.authService.isAuthenticated) return;
+    
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) return;
+
+    // TODO: Implement like functionality in card
+    // For now, just navigate to details where full functionality is available
+    this.router.navigate(['/expositions', this.exposition.id]);
   }
 
   onDislike(event: Event): void {
     event.stopPropagation();
-    // TODO: Implement dislike functionality
-    console.log('Dislike exposition:', this.exposition.id);
+    if (!this.authService.isAuthenticated) return;
+    
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) return;
+
+    // TODO: Implement dislike functionality in card
+    // For now, just navigate to details where full functionality is available
+    this.router.navigate(['/expositions', this.exposition.id]);
   }
 }

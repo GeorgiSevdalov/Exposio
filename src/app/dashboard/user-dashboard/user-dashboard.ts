@@ -43,7 +43,7 @@ export class UserDashboard implements OnInit {
 
   get totalImages(): number {
     return this.userExpositions.reduce((total, expo) =>
-      total + (expo.images?.length || 0), 0);
+      total + (expo.images.length || 0), 0);
   }
 
   get totalLikes(): number {

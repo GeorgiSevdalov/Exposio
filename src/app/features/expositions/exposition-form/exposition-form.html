@@ -40,7 +40,7 @@
                   rows="4"
                   maxlength="1000">
                 </textarea>
-                <mat-hint>Optional: Tell viewers about your work ({{ descriptionControl?.value?.length || 0 }}/1000)</mat-hint>
+                <mat-hint>Optional: Tell viewers about your work ({{ descriptionControl?.value.length || 0 }}/1000)</mat-hint>
                 @if (descriptionControl?.invalid && descriptionControl?.touched) {
                   <mat-error>{{ getDescriptionErrorMessage() }}</mat-error>
                 }
